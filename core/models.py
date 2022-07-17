@@ -14,6 +14,7 @@ class ToDo(models.Model):
 
     name = models.CharField(max_length=255)
     status = models.CharField(choices=STATUS_CHOICES, default="todo", max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
