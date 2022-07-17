@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add">
+</form>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">To Do</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Doing</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Done</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Abandoned</a>
+    </li>
+</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos %}
+        <tr>
+            <th scope="row">{{todo.name}}</th>
+            <td>{{todo.status}}</td>
+            <td>
+                <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
+                        class="fas fa-check fa-lg text-success me-3"></i></a>
+                <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
+                        class="fas fa-trash-alt fa-lg text-warning"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
