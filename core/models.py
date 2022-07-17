@@ -2,13 +2,14 @@ from django.db import models
 
 # Create your models here.
 
+
 class ToDo(models.Model):
 
     STATUS_CHOICES = [
         ("todo", "To Do"),
         ("doing", "Doing"),
         ("done", "Done"),
-        ("abandoned", "Abandoned")
+        ("abandoned", "Abandoned"),
     ]
 
     name = models.CharField(max_length=255)
@@ -16,4 +17,3 @@ class ToDo(models.Model):
 
     def __str__(self):
         return self.name
-    
