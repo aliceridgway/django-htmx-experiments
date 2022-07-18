@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody id="todo-rows">
+        {% for todo in todos %}
+
+        {% include 'partials/todo_row.html' %}
+
+        {% endfor %}
+    </tbody>
+</table>

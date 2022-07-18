@@ -1,0 +1,16 @@
+<tr id="todo-row-{{todo.id}}">
+    <th scope="row">{{todo.name}}</th>
+    <td>{{todo.status}}</td>
+    <td>
+        {% if todo.status != "done" %}
+        <form hx-post="{% url 'complete' todo.id %}" hx-swap="outerHTML" hx-target="#todo-row-{{todo.id}}">
+            {% csrf_token %}
+            <input type="submit" value="Mark Complete">
+        </form>
+        {% endif %}
+        <form hx-post="{% url 'delete' todo.id %}" hx-swap="outerHTML" hx-target="#todo-row-{{todo.id}}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    </td>
+</tr>

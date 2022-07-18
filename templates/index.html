@@ -1,52 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form method="post">
+<form id="todo-form" method="post" hx-post="{% url 'add' %}" hx-swap="afterbegin" hx-target="#todo-rows">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Add">
 </form>
 
-<ul class="nav nav-tabs">
+<style>
+    .big-text {
+        font-size: 2rem;
+    }
+</style>
+
+<ul id="tabs" class="nav nav-tabs" hx-target="#todo-list" _="on htmx:afterOnLoad take .active for event.target">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">All</a>
+        <a class="nav-link active" hx-get="{% url 'all-todos' %}">All</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">To Do</a>
+        <a class="nav-link" hx-get="{% url 'filter-todos' Status.TODO %}">To Do</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Doing</a>
+        <a class="nav-link" hx-get="{% url 'filter-todos' Status.DOING %}">Doing</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Done</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Abandoned</a>
+        <a class="nav-link" hx-get="{% url 'filter-todos' Status.DONE %}">Done</a>
     </li>
 </ul>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Task</th>
-            <th scope="col">Status</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for todo in todos %}
-        <tr>
-            <th scope="row">{{todo.name}}</th>
-            <td>{{todo.status}}</td>
-            <td>
-                <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                        class="fas fa-check fa-lg text-success me-3"></i></a>
-                <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                        class="fas fa-trash-alt fa-lg text-warning"></i></a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<section id="todo-list">
+    {% include 'partials/todo_list.html' %}
+</section>
+
+<script>
+    const form = document.getElementById("todo-form")
+    form.addEventListener("htmx:afterRequest", () => form.reset())
+</script>
 
 {% endblock %}

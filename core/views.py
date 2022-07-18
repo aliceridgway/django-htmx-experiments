@@ -9,13 +9,9 @@ PAGE_LIMIT = 15
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    if request.method == "POST":
-        form = ToDoForm(request.POST)
-        if form.is_valid():
-            form.save()
 
     todos = ToDo.objects.all().order_by("-created")[:PAGE_LIMIT]
 
-    context = {"todos": todos, "form": ToDoForm()}
+    context = {"todos": todos, "form": ToDoForm(), "Status": ToDo.StatusChoice}
 
     return render(request, "index.html", context)

@@ -4,17 +4,20 @@ from django.db import models
 
 
 class ToDo(models.Model):
-
-    STATUS_CHOICES = [
-        ("todo", "To Do"),
-        ("doing", "Doing"),
-        ("done", "Done"),
-        ("abandoned", "Abandoned"),
-    ]
+    class StatusChoice(models.TextChoices):
+        TODO = "To Do"
+        DOING = "Doing"
+        DONE = "Done"
 
     name = models.CharField(max_length=255)
-    status = models.CharField(choices=STATUS_CHOICES, default="todo", max_length=255)
+    status = models.CharField(
+        choices=StatusChoice.choices, default=StatusChoice.TODO, max_length=255
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+    def complete(self):
+        self.status = "done"
+        self.save()
