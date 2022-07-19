@@ -17,7 +17,7 @@ def add_todo(request: HttpRequest) -> HttpResponse:
 
     todo = form.save()
 
-    context = {"todo": todo}
+    context = {"todo": todo, "Status": ToDo.StatusChoice}
 
     return render(request, "partials/todo_row.html", context)
 
@@ -27,12 +27,12 @@ def complete(request: HttpRequest, pk: int) -> HttpResponse:
 
     todo.complete()
 
-    context = {"todo": todo}
+    context = {"todo": todo, "Status": ToDo.StatusChoice}
 
     return render(request, "partials/todo_row.html", context)
 
 
-def delete(request: HttpRequest, pk: int) -> HttpResponse:
+def delete(_, pk: int) -> HttpResponse:
     todo = get_object_or_404(ToDo, pk=pk)
 
     todo.delete()

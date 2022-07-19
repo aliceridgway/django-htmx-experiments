@@ -19,5 +19,5 @@ class ToDo(models.Model):
         return self.name
 
     def complete(self):
-        self.status = "done"
+        self.status = ToDo.StatusChoice.DONE
         self.save()
