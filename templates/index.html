@@ -1,35 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form id="todo-form" method="post" hx-post="{% url 'add' %}" hx-swap="afterbegin" hx-target="#todo-rows">
+<h1 class="text-center my-5">To Do List</h1>
+
+<form class="w-50 mx-auto mb-5 d-flex" id="todo-form" method="post" hx-post="{% url 'add' %}" hx-swap="afterbegin"
+    hx-target="#todo-rows">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add">
+    {{ form }}
+    <input class="btn btn-primary mx-1" type="submit" value="Add">
 </form>
 
-<style>
-    .big-text {
-        font-size: 2rem;
-    }
-</style>
 
-<ul id="tabs" class="nav nav-tabs" hx-target="#todo-list" _="on htmx:afterOnLoad take .active for event.target">
-    <li class="nav-item">
-        <a class="nav-link active" hx-get="{% url 'all-todos' %}">All</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" hx-get="{% url 'filter-todos' Status.TODO %}">To Do</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" hx-get="{% url 'filter-todos' Status.DOING %}">Doing</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" hx-get="{% url 'filter-todos' Status.DONE %}">Done</a>
-    </li>
-</ul>
+<section class="card p-4">
 
-<section id="todo-list">
-    {% include 'partials/todo_list.html' %}
+    <ul id="tabs" class="nav nav-pills mb-4 pb-2" hx-target="#todo-list"
+        _="on htmx:afterOnLoad take .active for event.target">
+        <li class="nav-item">
+            <a class="nav-link active" hx-get="{% url 'all-todos' %}">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" hx-get="{% url 'filter-todos' Status.TODO %}">To Do</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" hx-get="{% url 'filter-todos' Status.DOING %}">Doing</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" hx-get="{% url 'filter-todos' Status.DONE %}">Done</a>
+        </li>
+    </ul>
+
+    <section id="todo-list">
+        {% include 'partials/todo_list.html' %}
+    </section>
+
 </section>
 
 <script>
