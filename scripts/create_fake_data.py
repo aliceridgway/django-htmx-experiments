@@ -9,7 +9,7 @@ fake: Faker = Faker()
 for i in range(100):
     todo = ToDo.objects.create(
         name=fake.paragraph(nb_sentences=1),
-        status=random.choice(ToDo.STATUS_CHOICES)[0],
+        status=random.choice(ToDo.StatusChoice.choices)[0],
     )
     print(f"Created todo. Name: {todo.name}  Status: {todo.status}")
 
