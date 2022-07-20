@@ -5,12 +5,10 @@ from django.http import HttpResponse, HttpRequest
 from core.forms import ToDoForm
 from core.models import ToDo
 
-PAGE_LIMIT = 15
-
 
 def index(request: HttpRequest) -> HttpResponse:
 
-    todos = ToDo.objects.all().order_by("-created")[:PAGE_LIMIT]
+    todos = ToDo.objects.all().order_by("-created")
 
     context = {"todos": todos, "form": ToDoForm(), "Status": ToDo.StatusChoice}
 
